@@ -1,0 +1,35 @@
+==============================================================================================================================================================
+Nama: Vincar
+Batch: HCK-18
+Conceptual Problem
+==============================================================================================================================================================
+Jawab pertanyaan berikut dengan menggunakan kalimat Anda sendiri:
+
+1. Jelaskan apa yang dimaksud dengan NoSQL menggunakan pemahaman yang kalian ketahui !
+> NoSQL is a database that is non-tabular and works in a different way than regular databases. 
+It is flexible which means can handle structured or unstructured data, scalable which makes it suitable for large scale, 
+and fast.
+
+2. Jelaskan kapan harus menggunakan NoSQL dan Relational Database Management System !
+> NoSQL should be used when the data is large, data is structured or unstructured, scaling is required, and fast to change like social media.
+> RDBMS should be used in smaller data, structured data, and data integrity is required such as legal or health.
+
+3. Sebutkan contoh 2 tools/platform NoSQL selain ElasticSearch beserta keunggulan tools/platform tersebut !
+> MongoDB, for document-oriented database and complex query. MongoDB stores data in a BSON format with a high flexibility that can accomodate different fields between documents.
+MongoDB also scales well using sharding. This makes MongoDB ideal for applications with the need to handle different data types and structures as well as scalability.
+> Cassandra, for wide-column store. This means that each row in a table can have different number of columns. Cassandra is ideal for real time data processing and
+applications with heavy read/write demands.
+
+4. Jelaskan apa yang Anda ketahui dari Airflow menggunakan pemahaman dan bahasa Anda sendiri !
+> Airflow is a platform to make, monitor, and schedule workflows. It can be used to create a data pipeline from start to finish and schedule when its run
+as well as executing and storing the data.
+
+5. Jelaskan apa yang Anda ketahui dari Great Expectations menggunakan pemahaman dan bahasa Anda sendiri !
+> Great Expectations is a tool for data validation. It sets a set of expectations to make sure that the data meets the requirements needed. This tool is used
+to monitor if a data doesn't meet the requirements set to maintain data integrity and quality. If a data doesnt meet expectation then it can be flagged or marked
+so that quick actions can be taken to deal with the problem.
+
+6. Jelaskan apa yang Anda ketahui dari Batch Processing menggunakan pemahaman dan bahasa Anda sendiri (Definisi, Contoh Kasus Penggunaan, Tools, dll) !
+> Batch processing is a method to process data in batches with a scheduled processing time instead of real time processing. This is usually done on large scale operations with large volumes of data. 
+The process is optimal for data that could be processed with a delay and is large in volume.
+

@@ -1,0 +1,38 @@
+URL: https://www.kaggle.com/datasets/sjleshrac/airlines-customer-satisfaction/data
+
+I did not load the data from PostgreSQL, however i did upload it through python. This is the code:
+
+# Function to create and return a connection
+def get_postgres_connection():
+    engine = create_engine(postgres_url)
+    return engine.connect()
+
+
+# Function to load csv into postgres
+def load_csv_to_postgres():
+    # Establish connection
+    conn = get_postgres_connection()
+
+    # Read csv
+    df = pd.read_csv('/opt/airflow/dags/P2M3_vincar_data_raw.csv')
+
+    # Convert to sql
+    df.to_sql('table_m3', conn, index=False, if_exists='replace')
+
+    # Print result  
+    print(f"Loaded {len(df)} records into PostgreSQL from CSV.")
+
+
+# Function to get data from the postgres
+def get_data():
+    # Establish connection
+    conn = get_postgres_connection()
+
+    # Read sql and selecting all
+    df = pd.read_sql_query("select * from table_m3", conn) 
+
+    # Convert to csv
+    df.to_csv('/opt/airflow/dags/P2M3_vincar_data_new.csv', sep=',', index=False)
+
+    # Print result 
+    print(f"Extracted {len(df)} records from PostgreSQL to CSV.")
