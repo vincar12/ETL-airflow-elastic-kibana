@@ -1,308 +1,86 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/vYc6gPVa)
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=15538338&assignment_repo_type=AssignmentRepo)
-# Milestone 3
+# Airline Customer Satisfaction Analysis
 
-_Milestone 3 ini dibuat guna mengevaluasi pembelajaran pada Hacktiv8 Data Science Fulltime Program khususnya pada Phase 2._
-
----
-
-## Assignment Objectives
-
-Milestone 3 ini dibuat guna mengevaluasi konsep pembelajaran Phase 2 sebagai berikut:
-
-- Mampu menggunakan Apache Airflow
-- Mampu melakukan validasi data dengan menggunakan Great Expectations
-- Mampu memahami konsep NoSQL secara keseluruhan.
-- Mampu mempersiapkan data untuk digunakan sebelum masuk ke database NoSQL.
-- Mampu mengolah dan memvisualisasikan data dengan menggunakan Kibana.
+## Table of Contents
+1. [Project Overview](#project-overview)
+2. [Project Structure](#project-structure)
+3. [ETL Process and DAG Workflow](#etl-process-and-dag-workflow)
+4. [Analysis and Insights](#analysis-and-insights)
+5. [Results](#results)
+6. [Conclusion](#conclusion)
+7. [References](#references)
+8. [Dashboard](#dashboard)
 
 ---
 
-## Dataset
-
-### Ketentuan Dataset
-1. Pilihlah dataset yang paling nyaman digunakan dalam mengerjakan Milestone 3. Adapun ketentuan dataset yang harus digunakan adalah :
-   * Setidaknya terdapat minimal 10 column.
-   * Setiap column terdiri dari :
-     + Capital letter dan lower letter atau semua huruf merupakan capital letter.
-     + Contoh : `Age`, `fullName`, `CITY`, `Education Level`.
-   * Tidak diperbolehkan memilih dataset dimana nama column terdiri dari lower letter saja.
-   * Terdapat campuran column berbentuk kategorikal dan numerikal.
-
-3. **Konsultasikan terlebih dahulu dataset yang hendak digunakan ke buddy masing-masing student. Jika disetujui, maka silakan dikerjakan. Jika tidak disetujui, maka cari dataset yang lain dan konsultasikan lagi mengenai dataset yang baru ini.**
-
-4. Student tidak boleh menggunakan dataset yang sudah dipakai dalam sesi pembelajaran saat dikelas bersama instruktur atau dataset pada tugas-tugas terdahulu dari Phase 0 hingga Phase 2.
-
-5. **Student dilarang untuk melakukan scraping dataset** karena dikhawatirkan proses pembuatan scraper dan proses scraping akan memakan waktu. Gunakan public dataset yang tersedia diberbagai macam situs Internet.
-
-6. Anda dapat membayangkan bahwa Anda saat ini bekerja sebagai seorang Data Analyst disebuah perusahaan. Carilah dataset yang sekiranya merepresentasikan domain sebuah perusahaan seperti data mengenai : 
-   - Product inventory.
-   - Revenue & profit.
-   - Kinerja pegawai.
-   - Customer profile.
-   - Keluhan produk/jasa.
-   - dll.
-
-### Data Sources
-Student dapat memilih dataset dari salah satu repository dibawah ini. Popular open data repositories :
-
-- [UC Irvine Machine Learning Repository](https://archive.ics.uci.edu/ml/index.php)
-- [Kaggle datasets](https://www.kaggle.com/datasets)
-- [Amazon’s AWS datasets](https://registry.opendata.aws/)
-
-Meta portals :
-
-- [Data Portals](http://dataportals.org/)
-- [OpenDataMonitor](https://opendatamonitor.eu/frontend/web/index.php?r=dashboard%2Findex)
-- [Quandl](https://www.quandl.com/)
-- Sumber lain yang kredibel.
+### 1. Project Overview
+This project examines airline customer satisfaction data to uncover patterns and trends that offer valuable insights for business decision-making. The process involves data cleaning, exploratory data analysis (EDA), and creating visualizations to gain a deeper understanding of sales performance over time. Additionally, an ETL process is implemented using DAGs, with data validation carried out through **Great Expectations**.
 
 ---
 
-## Problems
+### 2. Project Structure
+```bash
+├── images/                         # Contains images for the project (e.g., dashboards)
+├── P2M3_vincar_DAG.py              # Python script for DAG and ETL process
+├── P2M3_vincar_GX.ipynb            # Jupyter notebook for data exploration and validation using Great Expectations
+├── P2M3_vincar_data_clean.csv      # Cleaned dataset
+├── P2M3_vincar_data_raw.csv        # Raw dataset
+├── README.md                       # Project README file
+```
 
-Buatlah report yang berisi Exploratory Data Analysis (EDA) dari sebuah dataset dengan terlebih dahulu ditentukan mengenai objective yang hendak dicapai. Report akan berisi hasil EDA dan rekomendasi lanjutan terkait dengan objective.  
-  
-Dataset akan terlebih dahulu dilakukan Data Cleaning dan validasi data menggunakan Great Expectation. Semua proses dilakukan dengan pipeline yang dijalankan menggunakan Apache Airflow. Berikut ini adalah langkah-langkah yang harus dilakukan : 
+---
 
-1. Tentukan dataset yang hendak dipakai. Beri nama dataset ini dengan `P2M3_<nama-student>_data_raw.csv`. Contoh : `P2M3_raka_ardhi_data_raw.csv`.
+### 3. ETL Process and DAG Workflow
+The project uses an **ETL (Extract, Transform, Load)** process orchestrated by a **DAG** file to automate the workflow. The steps in the DAG workflow are:
 
-2. Masukan data tersebut ke dalam PostgreSQL local masing-masing student. Beri nama table untuk menyimpan data tersebut dengan `table_m3`. Masukkan data tersebut apa adanya dengan tanpa adanya perubahan apapun.
-
-3. Setelah data berada didalam database, ambil semua data dari database dengan menggunakan Python dan lakukan beberapa Data Cleaning berikut ini dengan menggunakan Python :
-   - Hapus data yang duplikat.
-   - Normalisasi column dengan cara : 
-     + Semua nama column menjadi lowercase. Contoh : `ID` → `id`, `EDUCATION` → `education`, `Age` → `age`.
-     + Spasi yang berada ditengah-tengah nama column diubah menjadi `_` (underscore). Contoh : `First Name` → `first_name`, `HOME ADDRESS` → `home_address`, `Alternative Phone Number` → `alternative_phone_number`.
-     + Menghapus spasi/tab/simbol yang dirasa tidak diperlukan pada nama column. Contoh : `  name` → `name`, `|CAR_PRICE|` → `car_price`.
-   - Handling Missing Values
-
-4. Setelah dilakukan Data Cleaning, simpan data clean ini ke dalam CSV file dengan nama `P2M3_<nama-student>_data_clean.csv`. Contoh : `P2M3_raka_ardhi_data_clean.csv`
-
-5. Buatlah sebuah Python Notebook (.ipynb) untuk melakukan validasi data menggunakan Great Expectations. Adapun kriteria mengenai Expectation yang dipilih adalah :
-   - Lakukan minimal 7 Expectations yang didalamnya harus ada Expectation untuk:
-     + to be unique
-     + to be between min_value and max_value
-     + to be in set
-     + to be in type list
-     + 3 jenis Expectation yang berbeda yang tidak diajarkan pada lecture Week 2 Day 5 AM - Data Ethics & Data Validation
-   - **Masing-masing Expectation diatas haruslah berbeda antar masing-masing jenis Expectation yang dipilih.**
-   - Ketujuh Expectation yang digunakan haruslah semuanya bernilai `success: true`.
-   - Untuk Expectation `to be unique`, Anda diizinkan untuk membuat sebuah column baru jika dirasa column yang ada didataset tidak ada yang unik. Column baru ini dapat berupa gabungan antara beberapa column yang sudah ada. Buatlah skenario fiksi mengenai kegunaan dari column ini sehingga jelas peruntukannya.
-   - Setiap Expectation hanya boleh berada pada 1 cell yang berbeda-beda sehingga dapat dilihat mengenai hasilnya.
-   - Simpan Python Notebook yang berisi data validation ini dengan nama `P2M3_<nama-student>_GX.ipynb`. Contoh : `P2M3_raka_ardhi_GX.ipynb`.
-
-6. Selain disimpan ke dalam file CSV seperti poin 4, data clean ini juga akan dimasukkan ke dalam Elastic Search dengan menggunakan Python.
-
-7. Lakukan automasi dengan membuat DAG dengan kriteria :
-   - DAG berisi 3 node/task dibawah ini :
-     + `Fetch from Postgresql` : berisi script untuk mengambil data dari PostgreSQL.
-     + `Data Cleaning` : berisi script untuk melakukan Data Cleaning dan penyimpanan ke CSV file.
-     + `Post to Elasticsearch` : berisi script untuk me-load CSV yang berisi data yang sudah clean dan memasukkannya ke Elasticsearch.
-   - Penjadwalan dilakukan setiap jam 06:30.
-   - Simpan DAG dengan nama `P2M3_raka_ardhi_DAG.py`.
-
-8. Buatlah dashboard dengan Kibana terhadap data clean ini dengan ketentuan :
-   - Jelaskan mengenai objective Exploratory Data Analysis yang hendak dilakukan. Nyatakan secara jelas mengenai tujuan report yang akan dibuat seperti :
-     * Latar belakang adanya report tersebut
-     * Tujuan yang hendak dicapai
-     * Divisi/tim yang membutuhkan
-     * dll
-   - Buatlah minimal 6 visualisasi terhadap data tersebut yang mendukung tercapainya objective dari proses EDA yang dilakukan. Adapun 6 visualisasi harus menggunakan plot seperti :
-     * 1 penggunaan Bar Plot
-     * 1 penggunaan Pie Chart
-     * 1 penggunaan Vertical Bar Plot
-     * 3 plot lainnya dibebaskan mengenai jenisnya namun tidak boleh menggunakan jenis plot yang sama dengan plot yang sudah ada.
-   - Setelah sebuah plot terbentuk, berikan narasi/insight yang dapat diambil dari plot tersebut. Anda bisa meletakkan insight ini dibawah plot atau disamping plot.
-   - Tambahkan 1 visualisasi berupa `Markdown` yang berisi :
-     + Identitas student.
-     + Penjelasan objective.
-   - Tambahkan 1 visualisasi berupa `Markdown` yang berisi :
-     + Kesimpulan eksplorasi yang dilakukan.
-     + Saran lanjutan atau insight bisnis terhadap eksplorasi yang dilakukan.
-     + Kesimpulan yang dituliskan haruslah berisi rekomendasi mengenai objective yang telah ditentukan berdasarkan gabungan antara hasil eksplorasi yang dilakukan dan suatu referensi eksternal (seperti teori suatu domain, pernyataan seorang ahli, fakta kompetitor, dll) sehingga rekomendasi dapat tepat sasaran dan masuk akal untuk diberikan.
-   - Total visualisasi : 6 visualisasi + 1 visualisasi Markdown mengenai indetitas + 1 visualisasi Markdown mengenai kesimpulan = 8 visualiasi.
-   - Student dipersilakan membuat skenario/situasi fiksi terhadap dataset yang dipakai.
-   - Student dipersilakan untuk mengaplikasikan teori mengenai Business Knowledge pada tugas ini.
-
-9. Screenshot setiap plot dan insight.
-   - Buat sebuah folder bernama `images`.
-   - Masukkan semua screenshot ke dalam folder tersebut.
-   - Sebuah plot dan insightnya akan dimasukkan ke dalam screenshot yang sama. 
-   - Screenshot juga bagian mengenai Identitas, Objective, dan Kesimpulan.
+1. **Load CSV into PostgreSQL**:
+   - The raw sales data (CSV) is loaded into a PostgreSQL database.
    
----
-## Conceptual Problems
+2. **Fetch Data from PostgreSQL**:
+   - Data is fetched from PostgreSQL for further processing.
 
-*Jawab pertanyaan berikut dengan menggunakan kalimat Anda sendiri:*
+3. **Preprocessing**:
+   - **Handling Missing Values**: Missing values are addressed using various imputation methods.
+   - **Handling Duplicates**: Duplicate records are identified and removed.
+   - **Column Renaming**: All column names are converted to lowercase, and spaces are replaced with underscores for consistency.
 
-1. Jelaskan apa yang dimaksud dengan NoSQL menggunakan pemahaman yang kalian ketahui !
+4. **Upload Data to Elasticsearch**:
+   - The cleaned and processed data is uploaded to **Elasticsearch** for indexing and further analysis.
 
-2. Jelaskan kapan harus menggunakan NoSQL dan Relational Database Management System !
-
-3. Sebutkan contoh 2 tools/platform NoSQL selain ElasticSearch beserta keunggulan tools/platform tersebut !
-
-4. Jelaskan apa yang Anda ketahui dari Airflow menggunakan pemahaman dan bahasa Anda sendiri !
-
-5. Jelaskan apa yang Anda ketahui dari Great Expectations menggunakan pemahaman dan bahasa Anda sendiri !
-
-6. Jelaskan apa yang Anda ketahui dari Batch Processing menggunakan pemahaman dan bahasa Anda sendiri (Definisi, Contoh Kasus Penggunaan, Tools, dll) !
+The DAG file that handles this ETL process is located in the repository under `P2M3_vincar_DAG.py`.
 
 ---
 
-## Assignment Instructions
-
-*Milestone 3* dikerjakan dengan beberapa **kriteria wajib** di bawah ini:
-
-1. *Project* dinyatakan selesai dan diterima untuk dinilai jika script dapat dijalankan dengan baik di prompt maupun terminal.
-
-2. Pada tugas Milestone 3, student akan diminta untuk membuat :
-   1. `P2M3_<nama-student>_ddl.txt`
-      - File ini berisi :
-        + URL dataset yang dijadikan acuan.
-        + Syntax DDL untuk pembuatan database dan table.
-        + Syntax DML untuk melakukan insert data ke database. Anda bisa menggunakan perintah `COPY` untuk melakukan insert data.
-      - Contoh penamaan : `P2M3_raka_ardhi_ddl.txt`
-   2. `P2M3_<nama-student>_data_raw.csv`
-      - File ini berisi dataset original yang akan dimasukkan ke dalam database PostgreSQL.
-      - Contoh penamaan : `P2M3_raka_ardhi_data_raw.csv`.
-   3. `P2M3_<nama-student>_data_clean.csv`
-      - File ini berisi data yang telah dilakukan Data Cleaning.
-      - Contoh penamaan : `P2M3_raka_ardhi_data_clean.csv`.
-   4. `P2M3_<nama-student>_DAG.py`
-      - File yang berisi DAG untuk dijalankan dengan menggunakan Apache Airflow yang terdiri dari :
-        + Python code untuk mengambil data dari database PostgreSQL.
-        + Python code untuk melakukan proses Data Cleaning seperti yang sudah ditentukan dan menyimpannya ke sebuah CSV file.
-        + Python code untuk me-load CSV yang berisi data yang sudah clean dan memasukkannya ke dalam Elasticsearch.
-      - Contoh penamaan : `P2M3_raka_ardhi_DAG.py`.
-   5. `P2M3_<nama-student>_conceptual.txt`.
-      - File ini berisi jawaban conceptual problem.
-      - Contoh penamaan : `P2M3_raka_ardhi_conceptual.txt`.
-   6. `P2M3_<nama-student>_GX.ipynb`
-      - File ini berisi Expectations yang digunakan untuk melakukan validasi data.
-      - Contoh penamaan : `P2M3_raka_ardhi_GX.ipynb`.
-   7. `/images`.
-      - Folder ini berisi daftar screenshot.
-      - Contoh penamaan :
-        * `introduction & objective.png`.
-        * `plot & insight 01.png`.
-        * `plot & insight 02.png`.
-        * `plot & insight 03.png`.
-        * `plot & insight 04.png`.
-        * `plot & insight 05.png`.
-        * `plot & insight 06.png`.
-        * `kesimpulan.png`.
-
-4. Pada file Python, **wajib** memberikan keterangan atau pengenalan dengan menggunakan `comment` atau `docstring` yang berisikan : Judul tugas, Nama, Batch, dan penjelasan singkat tentang program yang dibuat, fitur-fitur. Contoh:
-    ```py
-    '''
-    =================================================
-    Milestone 3
-
-    Nama  : Raka Ardhi
-    Batch : FTDS-001-RMT
-
-    Program ini dibuat untuk melakukan automatisasi transform dan load data dari PostgreSQL ke ElasticSearch. Adapun dataset yang dipakai adalah dataset mengenai penjualan mobil di Indonesia selama tahun 2020.
-    =================================================
-    '''
-    ```
-
-5. Anda diwajibkan menggunakan class/function untuk memisahkan bagian code agar flow dari code yang dibuat mudah diikuti. Berikan penjelasan pada setiap class/function yang dibuat dengan menggunakan docstring seperti : 
-   ```py
-   def get_data_from_postgresql(url, database, table):
-     '''
-     Fungsi ini ditujukan untuk mengambil data dari PostgreSQL untuk selanjutnya dilakukan Data Cleaning.
-
-     Parameters:
-      url: string - lokasi PostgreSQL
-      database: string - nama database dimana data disimpan
-      table: string - nama table dimana data disimpan
-
-     Return
-      data: list of str - daftar data yang ada di database
-        
-     Contoh penggunaan:
-     data = get_data_from_postgresql('localhost', 'db_phase2', 'table_m3')
-     '''
-
-     return data
-
-   ```
+### 4. Analysis and Insights
+The project focuses on:
+- Analyzing customer satisfaction levels to increase retention
+- Visualizing satisfaction levels by satsfied and disatisfied customers
+- Identifying key drivers of satisfaction and areas of improvement
 
 ---
 
-## Assignment Submission
+### 5. Results
+1. **Proportion of Loyal Customers**: 81.69% of the customers surveyed categorize themselves as loyal. Disloyal Customers represent 18.31% of the total, this group still offers room for improvement and retention efforts
 
-- Push Assignment yang telah Anda buat ke akun GitHub Classroom Anda masing-masing.
-- Contoh bentuk repository :
-  ```
-  P2-M3/raka-ardhi
-  |
-  ├── P2M3_raka_ardhi_ddl.txt
-  ├── P2M3_raka_ardhi_data_raw.csv
-  ├── P2M3_raka_ardhi_data_clean.csv
-  ├── P2M3_raka_ardhi_DAG.py
-  ├── P2M3_raka_ardhi_conceptual.txt
-  ├── P2M3_raka_ardhi_GX.ipynb
-  ├── README.md
-  ├── /images
-        ├── introduction & objective.png
-        ├── plot & insight 01.png
-        ├── plot & insight 02.png
-        ├── plot & insight 03.png
-        ├── plot & insight 04.png
-        ├── plot & insight 05.png
-        ├── plot & insight 06.png
-        └── kesimpulan.png
-  ```
+2. **Proportion of Satisfied Customers**: Satisfied Customers only make up 54.74% of the total, which means that slightly more than half of the customers are satisfied with their experience. Dissatisfied Customers account for 45.26% of the total, indicating that nearly half of the customer base is unhappy. Addressing the concerns of dissatisfied customers could help increase overall satisfaction and customer retention
+
+3. **Satisfaction Levels in Satisfied and Dissatisfied Customers**: There is a clear difference in how satisfied versus dissatisfied customers perceive the different service aspects, with satisfied customers consistently giving higher scores across categories. This indicates a need to focus on improving specific services to enhance the experience for dissatisfied customers
+
+4. **Satisfaction Levels in each Class**: The difference in the satisfaction levels of seat comfort and dining quality is not significant between each class, and that they are uniformly relatively low satisfaction. Business class passengers should have a privilege on these categories, similar satisfaction levels across classes suggests a possible mismatch between passenger expectations and their experiences, particularly in Business Class.
+
+5. **Customer Age Distribution**: The age of customers are skewed towards younger and middle-aged individuals, with the highest concentration of customers in the age range of 20-50 years. There is a noticeable peak at around age 25 and another smaller peak around age 40. The number of customers declines steadily after age 60, with very few customers above the age of 70. This distribution suggests that the business likely attracts a younger to middle-aged demographic, with fewer older customers.
+
+6. **Flight Time Convenience Satisfaction**: The satisfaction levels on the convenience of the flight times in both satisfied and dissatisfied customers average at just under 60%. Over 40% of customers feel that the flight times available for purchase are not convenient to their expectations.
 
 ---
 
-## Assignment Rubrics
-
-### Code Review
-
-| Criteria | Meet Expectations | Points |
-| --- | --- | --- |
-| DAG | DAG yang digunakan dapat dijalankan tanpa error | 12 pts |
-| Great Expectation | Mampu membuat 7 Expectations dengan 0 Error | 2 pts / Expectation |
-| Data Visualization | Mampu membuat minimal 6 visualisasi dengan menggunakan Kibana | 4 pts / visualisasi |
-| Insight | Menampilkan **insight di setiap visualisasi** yang ditampilkan pada dashboard | 4 pts / insight |
-| Conclusion | Penarikan kesimpulan yang dilakukan sejalan dengan tujuan dilakukannya eksplorasi dan terdapat saran/tindakan lanjutan/rekomendasi terhadap insight yang dihasilkan | 8 pts |
-| Runs Perfectly | Kode berjalan tanpa ada error. Seluruh kode berfungsi dan dibuat dengan benar. | 5 pts |
-
-### Concepts
-
-| Criteria | Meet Expectations | Points |
-| --- | --- | --- |
-| NoSQL | Mampu menjawab 6 pertanyaan dengan singkat, jelas, dan padat serta sesuai dengan konsep dan logika yang ada mengenai Conceptual Problems | 2 pts / pertanyaan |
-
-### Readability
-
-| Criteria | Meet Expectations | Points |
-| --- | --- | --- |
-| Tertata Dengan Baik | Semua baris kode terdokumentasi dengan baik dengan Markdown untuk penjelasan kode | 13 pts |
-
-```
-Kriteria tertata dengan baik diantaranya adalah: 
-
-1. Tidak menyalin markdown dari tugas lain.
-2. Import library rapih (terdapat dalam 1 cell dan tidak ada unused libs).
-3. Terdapat komentar pada setiap baris kode.
-4. Adanya pemisah yang jelas antar section, dll.
-5. Tidak adanya typo.
-```
+### 6. Conclusion
+Based on the analysis of the customer survey data, important insights can be taken. It can be concluded that although the proportion of loyal customers is high at 81%; the proportion of satisfied customers is much below expected, only 55% of all customers surveyed. Several factors affect the satisfaction of customers, these factors are inflight service and entertainments, online services, and the check-in service. Improvement must be done on categories that the business class should have privilege on, such as seat comfort as well as meal service. The scheduling of flights are still below the satisfactory level expected.
 
 ---
 
-```
-Total Points : 112
-```
+### 7. References
+- Dataset: [Airline Customer Satisfaction Dataset](https://www.kaggle.com/datasets/sjleshrac/airlines-customer-satisfaction/data)
+- Tools: Python, Pandas, Docker, Airflow, GreatExpectation, ElasticSearch, Kibana
 
----
-
-## Notes
-
-* **Deadline : P2W3D1 pukul 23:59 WIB.**
-
-* **Keterlambatan pengumpulan tugas mengakibatkan skor Milestone 3 menjadi 0.**
+### 8. Dashboard
+![Dashboard](https://github.com/vincar12/ETL-airflow-elastic-kibana/blob/main/images/Full%20Dashboard.png)
