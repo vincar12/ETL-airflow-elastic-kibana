@@ -1,17 +1,5 @@
 # Airline Customer Satisfaction Analysis
 
-## Table of Contents
-1. [Project Overview](#project-overview)
-2. [Project Structure](#project-structure)
-3. [ETL Process and DAG Workflow](#etl-process-and-dag-workflow)
-4. [Analysis and Insights](#analysis-and-insights)
-5. [Results](#results)
-6. [Conclusion](#conclusion)
-7. [References](#references)
-8. [Dashboard](#dashboard)
-
----
-
 ### 1. Project Overview
 This project examines airline customer satisfaction data to uncover patterns and trends that offer valuable insights for business decision-making. The process involves data cleaning, exploratory data analysis (EDA), and creating visualizations to gain a deeper understanding of sales performance over time. Additionally, an ETL process is implemented using DAGs, with data validation carried out through **Great Expectations**.
 
