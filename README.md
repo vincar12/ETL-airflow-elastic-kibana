@@ -47,6 +47,9 @@ The project focuses on:
 ---
 
 ### 5. Results
+
+![Dashboard](https://github.com/vincar12/ETL-airflow-elastic-kibana/blob/main/images/Full%20Dashboard.png)
+
 1. **Proportion of Loyal Customers**: 81.69% of the customers surveyed categorize themselves as loyal. Disloyal Customers represent 18.31% of the total, this group still offers room for improvement and retention efforts
 
 2. **Proportion of Satisfied Customers**: Satisfied Customers only make up 54.74% of the total, which means that slightly more than half of the customers are satisfied with their experience. Dissatisfied Customers account for 45.26% of the total, indicating that nearly half of the customer base is unhappy. Addressing the concerns of dissatisfied customers could help increase overall satisfaction and customer retention
@@ -69,6 +72,3 @@ Based on the analysis of the customer survey data, important insights can be tak
 ### 7. References
 - Dataset: [Airline Customer Satisfaction Dataset](https://www.kaggle.com/datasets/sjleshrac/airlines-customer-satisfaction/data)
 - Tools: Python, Pandas, Docker, Airflow, GreatExpectation, ElasticSearch, Kibana
-
-### 8. Dashboard
-![Dashboard](https://github.com/vincar12/ETL-airflow-elastic-kibana/blob/main/images/Full%20Dashboard.png)
